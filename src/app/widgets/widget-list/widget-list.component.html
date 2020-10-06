@@ -1,0 +1,27 @@
+<h2 class="float-left">Widgets</h2>
+<button routerLink="/widgets/detail" class="btn btn-outline-primary float-right">Nieuw</button>
+<table class="table table-light">
+  <thead class="thead-light">
+    <tr>
+      <th>Name</th>
+      <th>api_key</th>
+      <th>program</th>
+      <th>service</th>
+      <th>token</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let w of widgets$ | async">
+      <td>{{ w.name }}</td>
+      <td>{{ w.api_key }}</td>
+      <td>{{ w.program }}</td>
+      <td>{{ w.service }}</td>
+      <td>{{ w.token }}</td>
+      <td>
+        <a class="btn btn-link" routerLink="/widgets/detail/{{ w.id }}">edit</a>
+        <button (click)="delete(w.id)" class="btn btn-link">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

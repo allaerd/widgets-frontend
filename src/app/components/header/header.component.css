@@ -1,0 +1,3 @@
+#lua-navbar-toggler:checked ~ .collapse {
+  display:block;
+}
