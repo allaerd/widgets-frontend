@@ -1,40 +1,46 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Constants} from '../../core/config/constants';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class AuthService {
-  // Variables
-  authUrl = 'http://localhost:8000/oauth/token';
-  apiUrl = 'http://localhost:8000/api';
-  isLoggedIn = false;
-  /**
-   * Constructor
-   * @param http The http client object
-   */
-  constructor(private http: HttpClient) {}
+    isLoggedIn = false;
 
-  login(e: string, p: string): Observable<any> {
-    return this.http.post(this.authUrl, {
-      grant_type: 'password',
-      client_id: '2',
-      client_secret: 'nokdb426a5w81SAb3uAwyfP8yhi2uMfNbVvxnKJu',
-      username: e,
-      password: p,
-      scope: '*',
-    });
-  }
+    /**
+     * Constructor
+     * @param http The http client object
+     */
+    constructor(private http: HttpClient, private constants: Constants) {
+    }
 
-  handleLogin(data: any): void {
-    localStorage.setItem('token', data.access_token);
-    this.isLoggedIn = true;
-  }
+    login(e: string, p: string): Observable<any> {
+        return this.http.post(this.constants.AUTH_ENDPOINT, {
+            grant_type: 'password',
+            client_id: this.constants.CLIENT_ID,
+            client_secret: this.constants.CLIENT_SECRET,
+            username: e,
+            password: p,
+            scope: '*',
+        });
+    }
 
-  logout(): Observable<any> {
-    localStorage.removeItem('token');
-    this.isLoggedIn = false;
-    return this.http.get(this.apiUrl + '/token/revoke');
-  }
+    isUserLoggedIn(): void {
+        if (localStorage.getItem('token')) {
+            this.isLoggedIn = true;
+        }
+    }
+
+    handleLogin(data: any): void {
+        localStorage.setItem('token', data.access_token);
+        this.isLoggedIn = true;
+    }
+
+    logout(): Observable<any> {
+        localStorage.removeItem('token');
+        this.isLoggedIn = false;
+        return this.http.get(this.constants.API_ENDPOINT + '/token/revoke');
+    }
 }

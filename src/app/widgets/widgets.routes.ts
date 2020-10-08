@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { CreateWidgetComponent } from './create-widget/create-widget.component';
+import { WidgetDetailComponent } from './widget-detail/widget-detail.component';
 import { WidgetListComponent } from './widget-list/widget-list.component';
 
 export const WidgetsRoutes: Routes = [
   {path: 'widgets', component: WidgetListComponent},
-  {path: 'widgets/detail', component: CreateWidgetComponent},
-  {path: 'widgets/detail/:id', component: CreateWidgetComponent},
+  {path: 'widgets/create', component: WidgetDetailComponent},
+  {path: 'widgets/edit/:id', component: WidgetDetailComponent},
 ];

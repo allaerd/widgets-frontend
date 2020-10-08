@@ -1,0 +1,79 @@
+<form [formGroup]="widgetForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label>Naam</label>
+        <input
+                formControlName="name"
+                appValidInValid
+                class="form-control"
+                type="text"
+        />
+    </div>
+    <div class="form-group">
+        <label>API key</label>
+        <input
+                appValidInValid
+                formControlName="api_key"
+                class="form-control"
+                type="text"
+        />
+    </div>
+    <div class="form-group">
+        <label>API secret</label>
+        <input
+                appValidInValid
+                formControlName="api_secret"
+                class="form-control"
+                type="password"
+        />
+    </div>
+    <div class="form-group">
+        <label>Program</label>
+        <input
+                appValidInValid
+                formControlName="program"
+                class="form-control"
+                type="number"
+        />
+    </div>
+    <div class="form-group">
+        <label>Service</label>
+        <input formControlName="service" class="form-control" type="number"/>
+    </div>
+    <div class="form-group">
+        <label>Report</label>
+        <input formControlName="report" class="form-control" type="number"/>
+    </div>
+    <div class="form-group">
+        <label>Return URL</label>
+        <input formControlName="return_url" class="form-control" type="text"/>
+    </div>
+    <div class="form-group">
+        <label>Startpage (entry point)</label>
+        <div class="form-check">
+            <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="startpage"
+                    value="program"
+                    id="startpageprogram"
+            />
+            <label class="form-check-label" for="startpageprogram">Program</label>
+        </div>
+        <div class="form-check">
+            <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="startpage"
+                    value="dashboard"
+            /><label class="form-check-label">Dashboard</label>
+        </div>
+    </div>
+
+    <button
+            [disabled]="!widgetForm.valid"
+            type="submit"
+            class="btn btn-outline-primary btn-block"
+    >
+        opslaan
+    </button>
+</form>
