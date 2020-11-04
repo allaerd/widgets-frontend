@@ -1,30 +1,40 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Constants} from '../../core/config/constants';
+import {catchError, map, tap} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
     isLoggedIn = false;
+    errorMsg = '';
 
     /**
      * Constructor
      * @param http The http client object
      */
-    constructor(private http: HttpClient, private constants: Constants) {
+    constructor(private http: HttpClient, private constants: Constants, private router: Router) {
     }
 
-    login(e: string, p: string): Observable<any> {
-        return this.http.post(this.constants.AUTH_ENDPOINT, {
+    login(e: string, p: string): void {
+        this.http.post(this.constants.AUTH_ENDPOINT, {
             grant_type: 'password',
             client_id: this.constants.CLIENT_ID,
             client_secret: this.constants.CLIENT_SECRET,
             username: e,
             password: p,
             scope: '*',
-        });
+        }).pipe(
+            tap(data => this.handleLogin(data)),
+            catchError(error => {
+                this.errorMsg = 'Er is iets misgegaan!';
+                return of(null);
+            })
+        ).subscribe();
+
     }
 
     isUserLoggedIn(): void {
@@ -35,7 +45,9 @@ export class AuthService {
 
     handleLogin(data: any): void {
         localStorage.setItem('token', data.access_token);
+        this.errorMsg = '';
         this.isLoggedIn = true;
+        this.router.navigate(['/widgets']);
     }
 
     logout(): Observable<any> {

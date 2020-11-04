@@ -17,11 +17,7 @@ export class LoginComponent implements  OnInit {
   }
 
   login(): void {
-    this.auth.login(this.email, this.password).subscribe(
-      (data: any) => this.auth.handleLogin(data) ,
-      (err) => console.log(err),
-      () => console.log('done login')
-    );
+    this.auth.login(this.email, this.password) ;
   }
 
   logout(): void {
