@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WidgetListComponent } from './widget-list.component';
+import {HttpClient, HttpHandler} from '@angular/common/http';
+import {Constants} from '../../core/config/constants';
+import {Router} from '@angular/router';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('WidgetListComponent', () => {
   let component: WidgetListComponent;
@@ -8,7 +12,8 @@ describe('WidgetListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WidgetListComponent ]
+      declarations: [ WidgetListComponent ],
+      providers: [HttpClientTestingModule, HttpClient, HttpHandler, Constants, Router]
     })
     .compileComponents();
   });
