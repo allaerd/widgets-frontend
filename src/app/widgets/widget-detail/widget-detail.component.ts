@@ -38,8 +38,10 @@ export class WidgetDetailComponent implements OnInit {
 
         this.activatedRoute.params.subscribe(params => {
             this.id = params.id;
-            this.widgetForm.patchValue(this.widgetService.selectedWidget);
-            this.style = 'update';
+            if ( this.id ) {
+                this.widgetForm.patchValue(this.widgetService.selectedWidget);
+                this.style = 'update';
+            }
         });
     }
 
