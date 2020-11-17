@@ -10,6 +10,7 @@ import {HeaderComponent} from './components/header/header.component';
 import {CoreModule} from './core/core.module';
 import {Constants} from './core/config/constants';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
     declarations: [
@@ -21,8 +22,9 @@ import { ErrorPageComponent } from './error-page/error-page.component';
         BrowserModule,
         AuthModule,
         WidgetsModule,
+        CoreModule,
         AppRoutingModule,
-        CoreModule
+        StoreModule.forRoot({}, {})
     ],
     providers: [
         Constants,
