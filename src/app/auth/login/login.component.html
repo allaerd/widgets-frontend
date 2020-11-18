@@ -1,9 +1,13 @@
-<div class="alert alert-danger" *ngIf="auth.errorMsg">
-    {{auth.errorMsg}}
+<div class="alert alert-danger" *ngIf="(auth$ | async).errorMsg">
+    {{(auth$ | async).errorMsg}}
 </div>
+<div class="spinner-border" role="status" *ngIf="(auth$ | async).loading">
+    <span class="sr-only">Loading...</span>
+</div>
+
 <div class="row">
     <div class="col-4 offset-4">
-        <div *ngIf=!auth.isLoggedIn>
+        <div *ngIf="!(auth$ | async).isLoggedIn">
             <div class="form-group">
                 <label>Email address</label>
                 <input class="form-control" [(ngModel)]="email" type="text"/>
@@ -16,7 +20,7 @@
                 <button class="btn btn-block btn-primary" (click)="login()">Login</button>
             </div>
         </div>
-        <div *ngIf="auth.isLoggedIn">
+        <div *ngIf="(auth$ | async).isLoggedIn">
             <div class="form-group">
                 <button class="btn btn-block btn-primary" (click)="logout()">logout</button>
             </div>

@@ -19,21 +19,15 @@ export class AuthService {
     constructor(private http: HttpClient, private constants: Constants, private router: Router) {
     }
 
-    login(e: string, p: string): void {
-        this.http.post(this.constants.AUTH_ENDPOINT, {
+    login(email: string, password: string): Observable<any> {
+        return this.http.post(this.constants.AUTH_ENDPOINT, {
             grant_type: 'password',
             client_id: this.constants.CLIENT_ID,
             client_secret: this.constants.CLIENT_SECRET,
-            username: e,
-            password: p,
+            username: email,
+            password,
             scope: '*',
-        }).pipe(
-            tap(data => this.handleLogin(data)),
-            catchError(error => {
-                this.errorMsg = 'Er is iets misgegaan!';
-                return of(null);
-            })
-        ).subscribe();
+        });
 
     }
 

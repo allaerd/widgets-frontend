@@ -1,6 +1,9 @@
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+
+import {StoreModule} from '@ngrx/store';
+
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AuthModule} from './auth/auth.module';
@@ -9,8 +12,12 @@ import {WidgetsModule} from './widgets/widgets.module';
 import {HeaderComponent} from './components/header/header.component';
 import {CoreModule} from './core/core.module';
 import {Constants} from './core/config/constants';
-import { ErrorPageComponent } from './error-page/error-page.component';
-import { StoreModule } from '@ngrx/store';
+import {ErrorPageComponent} from './error-page/error-page.component';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
+import {AuthEffects} from './auth/store/auth.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {authReducer} from './auth/store/auth.reducer';
 
 @NgModule({
     declarations: [
@@ -20,11 +27,17 @@ import { StoreModule } from '@ngrx/store';
     ],
     imports: [
         BrowserModule,
+        StoreModule.forRoot({auth: authReducer}),
+        EffectsModule.forRoot([AuthEffects]),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25, // Retains last 25 states
+            logOnly: environment.production, // Restrict extension to log-only mode
+        }),
         AuthModule,
         WidgetsModule,
         CoreModule,
         AppRoutingModule,
-        StoreModule.forRoot({}, {})
+        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production})
     ],
     providers: [
         Constants,
