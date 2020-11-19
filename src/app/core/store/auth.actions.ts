@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
-import {AuthLoginCredentials} from '../models/auth.login.credentials';
-import {AuthLoginResponse} from '../models/auth.login.response';
+import {AuthLoginCredentials} from '../../auth/models/auth.login.credentials';
+import {AuthLoginResponse} from '../../auth/models/auth.login.response';
 import {Actions} from '@ngrx/effects';
 
 export const enum AuthActionTypes {

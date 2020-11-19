@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth/services/auth-service.service';
 import {Store} from '@ngrx/store';
-import * as authAction from '../store/auth.actions';
-import {AuthState} from '../store/auth.reducer';
+import * as authAction from '../../core/store/auth.actions';
+import {AuthState} from '../../core/store/auth.reducer';
 import {Observable} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
+import {AppState} from '../../core/store/reducers';
 
 @Component({
     selector: 'app-login',
@@ -16,11 +15,11 @@ export class LoginComponent implements OnInit {
     password: string;
     auth$: Observable<AuthState>;
 
-    constructor(private store: Store<any>) {
+    constructor(private store: Store<AppState>) {
     }
 
     ngOnInit(): void {
-        this.auth$ = this.store.select('auth');
+        this.auth$ = this.store.select('authState');
     }
 
     login(): void {

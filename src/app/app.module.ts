@@ -15,9 +15,9 @@ import {Constants} from './core/config/constants';
 import {ErrorPageComponent} from './error-page/error-page.component';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
-import {AuthEffects} from './auth/store/auth.effects';
+import {AuthEffects} from './core/store/auth.effects';
 import {EffectsModule} from '@ngrx/effects';
-import {authReducer} from './auth/store/auth.reducer';
+import {reducers} from './core/store/reducers';
 
 @NgModule({
     declarations: [
@@ -27,7 +27,7 @@ import {authReducer} from './auth/store/auth.reducer';
     ],
     imports: [
         BrowserModule,
-        StoreModule.forRoot({auth: authReducer}),
+        StoreModule.forRoot(reducers),
         EffectsModule.forRoot([AuthEffects]),
         StoreDevtoolsModule.instrument({
             maxAge: 25, // Retains last 25 states

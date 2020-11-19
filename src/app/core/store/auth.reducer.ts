@@ -25,6 +25,7 @@ export function authReducer(state = initialState, action: AuthActions): AuthStat
         case AuthActionTypes.AUTH_LOGIN_SUCCESS:
             return {
                 ...state,
+                token: action.payload.access_token,
                 isLoggedIn: true,
                 loading: false,
                 errorMsg: ''
@@ -35,6 +36,13 @@ export function authReducer(state = initialState, action: AuthActions): AuthStat
                 isLoggedIn: false,
                 loading: false,
                 errorMsg: 'Er is een fout opgetreden'
+            };
+        case AuthActionTypes.AUTH_LOGOUT:
+            return {
+                ...state,
+                isLoggedIn: false,
+                loading: false,
+                errorMsg: ''
             };
         default:
             return state;
